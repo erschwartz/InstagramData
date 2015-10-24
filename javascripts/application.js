@@ -19,29 +19,51 @@ Instagram.Config = {
     photoTemplate = _.template($('#photo-template').html());
   }
 
-  function toTemplate(photo){
-    newPhoto = {
+  
+
+  function userReturn(id) {
+    var theUser;
+    var thePhoto;
+    var config = Instagram.Config;
+    userUrl = config.apiHost + "/v1/users/" + id + "/?client_id=80e2179188064513abc38425a6732f99";
+    $.getJSON(userUrl, function(user) {
+      user = {
+          username: user.data.username,
+          full_name: user.data.full_name,
+          profile_picture: user.data.profile_picture,
+          counts: {
+            media: user.data.counts.media,
+            follows: user.data.counts.follows,
+            followed_by: user.data.counts.followed_by,
+            id: user.data.id
+          }
+        };
+      theUser = user;
+      console.log(theUser);
+      return theUser;
+    });
+  }
+
+  function photoReturn(photo, userRet) {
+      newPhoto = {
       count: photo.likes.count,
       avatar: photo.user.profile_picture,
       photo: photo.images.low_resolution.url,
       url: photo.link,
       likesCount: photo.likes.count,
-      user: {
-        profile_picture: photo.user.profile_picture,
-        username: photo.user.username,
-        id: photo.user.id,
-        full_name: photo.user.full_name
-      },
+      user: userRet,
       caption: photo.caption.text
     };
+    return newPhoto;
+  }
+
+  function toTemplate(photo){
+    var userRet = userReturn(photo.user.id);
+    var newPhoto = photoReturn(photo, userRet);
     console.log(newPhoto);
     return photoTemplate(newPhoto);
   }
 
-  function userReturn(user) {
-    $.getJSON(config.apiHost + "/v1/users/" + user.id + "/callback=?&client_id=" + config.clientID);
-    
-  }
 
   function toScreen(photos){
     var photos_html = '';
