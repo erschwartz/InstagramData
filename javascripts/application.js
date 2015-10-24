@@ -3,7 +3,7 @@ var Instagram = {};
 
 // Small object for holding important configuration data.
 Instagram.Config = {
-  clientID: 'a307c0d0dada4b77b974766d71b72e0e',
+  clientID: '80e2179188064513abc38425a6732f99',
   apiHost: 'https://api.instagram.com'
 };
 
@@ -20,14 +20,27 @@ Instagram.Config = {
   }
 
   function toTemplate(photo){
-    photo = {
+    newPhoto = {
       count: photo.likes.count,
       avatar: photo.user.profile_picture,
       photo: photo.images.low_resolution.url,
-      url: photo.link
+      url: photo.link,
+      likesCount: photo.likes.count,
+      user: {
+        profile_picture: photo.user.profile_picture,
+        username: photo.user.username,
+        id: photo.user.id,
+        full_name: photo.user.full_name
+      },
+      caption: photo.caption.text
     };
+    console.log(newPhoto);
+    return photoTemplate(newPhoto);
+  }
 
-    return photoTemplate(photo);
+  function userReturn(user) {
+    $.getJSON(config.apiHost + "/v1/users/" + user.id + "/callback=?&client_id=" + config.clientID);
+    
   }
 
   function toScreen(photos){
@@ -43,17 +56,18 @@ Instagram.Config = {
     $('div#photos-wrap').append(photos_html);
   }
 
+
+
   function generateResource(tag){
     var config = Instagram.Config, url;
 
     if(typeof tag === 'undefined'){
-      throw new Error("Resource requires a tag. Try searching for cats.");
+      throw new Error("Resource requires a tag. Try searching for Capital One.");
     } else {
       // Make sure tag is a string, trim any trailing/leading whitespace and take only the first 
       // word, if there are multiple.
       tag = String(tag).trim().split(" ")[0];
     }
-
     url = config.apiHost + "/v1/tags/" + tag + "/media/recent?callback=?&client_id=" + config.clientID;
 
     return function(max_id){
@@ -120,7 +134,6 @@ Instagram.Config = {
 $(function(){
   Instagram.App.init();
   
-  // Start with a search on cats; we all love cats.
-  Instagram.App.search('cats');  
+  Instagram.App.search('CapitalOne');  
 });
 
