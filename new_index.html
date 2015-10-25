@@ -13,7 +13,9 @@
       font-size: 17px;
     }
   </style>
-
+  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <script src="d3pie.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -43,122 +45,227 @@
 
       <br/>
 
-      <div class="row">
-        <div id="instafeed"></div>
-      </div>
-    </div>
-
-    <a class="waves-effect waves-light btn-large" id="load-more" style="display: table; margin: 0 auto;">Load More</a>
-
-    <br/>
-
-  </div>
-
-
-
-  <!-- Import JavaScript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-  <script src='javascripts/instafeed.js' type='text/javascript' charset='utf-8'></script>
-  <script>
-      $(document).ready(function(){
-         $('select').material_select();
-
-         $('#sort-by').change(function() {
-           $('#instafeed').html('');
-           createFeed();
-         });
-
-         var loadButton = $("#load-more");
-         loadButton.hide();
-         $('#search-form').submit(false);
-
-         $('#search').keypress(function(e) {
-            if(e.which == 13) {
-              $('#instafeed').html('');
-              createFeed();
+      <center><div id="pieChart"></div></center>
+      <script>
+        var pie = new d3pie("pieChart", {
+          "header": {
+            "title": {
+              "text": "Sentiment Analysis",
+              "fontSize": 24,
+              "font": "open sans"
+            },
+            "subtitle": {
+              "text": "A full pie chart showing the percentage of reactions for this hashtag",
+              "color": "#999999",
+              "fontSize": 12,
+              "font": "open sans"
+            },
+            "titleSubtitlePadding": 9
+          },
+          "footer": {
+            "color": "#999999",
+            "fontSize": 10,
+            "font": "open sans",
+            "location": "bottom-left"
+          },
+          "size": {
+            "canvasWidth": 590,
+            "pieOuterRadius": "90%"
+          },
+          "data": {
+            "sortOrder": "value-desc",
+            "content": [
+            {
+              "label": "Positive",
+              "value": 4,
+              "color": "#0c6197"
+            },
+            {
+              "label": "Neutral",
+              "value": 3,
+              "color": "#4daa4b"
+            },
+            {
+              "label": "Negative",
+              "value": 7,
+              "color": "#cb2121"
             }
-         });
+            ]
+          },
+          "labels": {
+            "outer": {
+              "pieDistance": 32
+            },
+            "inner": {
+              "hideWhenLessThanPercentage": 3
+            },
+            "mainLabel": {
+              "fontSize": 11
+            },
+            "percentage": {
+              "color": "#ffffff",
+              "decimalPlaces": 0
+            },
+            "value": {
+              "color": "#adadad",
+              "fontSize": 11
+            },
+            "lines": {
+              "enabled": true
+            },
+            "truncation": {
+              "enabled": true
+            }
+          },
+          "effects": {
+            "pullOutSegmentOnClick": {
+              "effect": "linear",
+              "speed": 400,
+              "size": 8
+            }
+          },
+          "misc": {
+            "gradient": {
+              "enabled": true,
+              "percentage": 100
+            }
+          }
+        });
+</script>
 
-         function createFeed() {
-           var allPosts = [];
-           var feed = new Instafeed({
-               get: 'tagged',
-               tagName: $("#search").val(),
-               clientId: '80e2179188064513abc38425a6732f99',
-               template:
-                   '<div class="col s6">' +
-                     '<div class="card large hoverable">' +
-                       '<div class="card-image waves-effect waves-block waves-light">' +
-                         '<img class="activator" src="{{image}}">' +
-                       '</div>' +
-                       '<div class="card-content">' +
-                         'Username: {{model.user.username}} <br/> Likes: {{model.likes.count}} <br/> Comments: {{model.comments.count}} <br/> Date Posted: {{model.created_time}}' +
-                       '</div>' +
-                       '<div class="card-reveal">' +
-                         '<span class="card-title grey-text text-darken-4"><a href="{{link}}">{{link}}</a><i class="material-icons right">close</i></span>' +
-                         '<p>{{caption}}</p>' +
-                       '</div>' +
-                     '</div>' +
-                   '</div>',
-               resolution: 'standard_resolution',
-               sortBy: $('#sort-by option:selected').val(),
-               filter: function(image) {
-                 image.created_time = moment.unix(image.created_time).format("MM/DD/YYYY");
-                 allPosts.push(image);
-                 console.log(allPosts);
-                 return true;
-               },
-               after: function() {
-                 // disable button if no more results to load
-                 if (this.hasNext()) {
-                   loadButton.show();
-                 }
 
-                 // Variable allPosts[] contains all of the posts fetched from Instagram based on the searched hashtag (~20 on first query).
-                 // It has ~20 more posts added to it everytime "Load More" is pressed, since more posts are fetched.
-                 // When a different "Sort By" option is chosen, the variable will reset.
+<div class="row">
+  <div id="instafeed"></div>
+</div>
+</div>
 
-                 // You can start from here in implementing the algorithms and D3 visualizations.
+<a class="waves-effect waves-light btn-large" id="load-more" style="display: table; margin: 0 auto;">Load More</a>
 
-                 // These are my (by no means complete) notes on making an algorithm to asses the effectivity of a hashtag
+<br/>
 
-                      // USER
-                      // Followers ++
-                      // Following -
-                      // Number of Posts +/-
-                      //
-                      // POST
-                      // Likes ++
-                      // Comments +/-
-                      // 	Depends on Sentiment (speaking of which, here are two links that discuss API's for it)
-                      //    http://blog.mashape.com/list-of-20-sentiment-analysis-apis/
-                      //    https://www.quora.com/Where-can-I-find-an-online-API-for-sentiment-analysis
-                      //
-                      // IF “user_has_liked” === TRUE
-                      // 	Likes---
-                      //
-                      //
-                      // Followers - (Following * 0.1) + [Assess their post reach history] = Reputation/Reach of User
-                      //  Post Reach history: Potnetially Look into the performance of their posts in the past, find a way to use that information to better judge the user's significance
-                      //
-                      // Non OP Likes + Positive Sentiments - Negative Sentiments + (Neutral * 0.1 {shows engagement in the post}) = Effect of the post on the company
-                      //
-                      // Rep/Reach of user + Post’s take on company = influence of the hashtag in the specific post (+/-)
-                      //
-                      // Influence of all posts (Pos - Neg) / # of posts = Effectiveness of the hashtag
+</div>
 
-                  // Don't forget to wake me up!!!
 
-                 console.log(allPosts);
-               }
-           });
-           loadButton.click(function() {
-             feed.next();
-           });
-           feed.run();
-         }
-      });
-  </script>
+
+<!-- Import JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script src='javascripts/instafeed.js' type='text/javascript' charset='utf-8'></script>
+<script>
+
+  $(document).ready(function(){
+   $('select').material_select();
+
+   $('#sort-by').change(function() {
+     $('#instafeed').html('');
+     createFeed();
+   });
+
+   var loadButton = $("#load-more");
+   loadButton.hide();
+   $('#search-form').submit(false);
+
+   $('#search').keypress(function(e) {
+    if(e.which == 13) {
+      $('#instafeed').html('');
+      createFeed();
+    }
+  });
+
+
+
+   function createFeed() {
+    var alchemyKey = 'ce33385d52eb089dec6b3a86fbdadbaa4cba424f';
+    var allPosts = [];
+    var captions = [];
+    var feed = new Instafeed({
+     get: 'tagged',
+     tagName: $("#search").val(),
+     clientId: 'e59d838604834928b10f01ccfd0110e5',
+     template:
+     '<div class="col s6">' +
+     '<div class="card large hoverable">' +
+     '<div class="card-image waves-effect waves-block waves-light">' +
+     '<img class="activator" src="{{image}}">' +
+     '</div>' +
+     '<div class="card-content">' +
+     'Username: {{model.user.username}} <br/> Likes: {{model.likes.count}} <br/> Comments: {{model.comments.count}} <br/> Date Posted: {{model.created_time}}' +
+     '</div>' +
+     '<div class="card-reveal">' +
+     '<span class="card-title grey-text text-darken-4"><a href="{{link}}">{{link}}</a><i class="material-icons right">close</i></span>' +
+     '<p>{{caption}}</p>' +
+     '<p id ="sentiment{{id}}"></p>' +
+     '<p id ="user{{id}}"></p>' + 
+     '</div>' +
+     '</div>' +
+     '</div>',
+     resolution: 'standard_resolution',
+     sortBy: $('#sort-by option:selected').val(),
+     filter: function(image) {
+       image.created_time = moment.unix(image.created_time).format("MM/DD/YYYY");
+       allPosts.push(image);
+
+       return true;
+     },
+     after: function() {
+      var positive = 0;
+      var negative = 0;
+      var neutral = 0;
+      for (var i = 0; i < allPosts.length; i++) {
+        url = "http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment?apikey="+alchemyKey+"&text="+encodeURIComponent(allPosts[i].caption.text)+"&outputMode=json";
+        photoid = "sentiment" + allPosts[i].id;
+        useriddiv = "user" + allPosts[i].id;
+        userid = allPosts[i].user.id;
+          (function(url, id, useriddiv, userid) { // protects i in an immediately called function
+            userInfoGet(userid, useriddiv);
+            $.getJSON(url, function (data) {
+              element = document.getElementById(id);
+              if (data.status === "OK") {
+                type = data.docSentiment.type;
+                switch (type) {
+                  case 'positive':
+                  positive++;
+                  case 'neutral':
+                  neutral++;
+                  default:
+                  negative++;
+                }
+                score = data.docSentiment.score;
+                element.innerHTML = "Type: " + type + " Score: " + score;
+              } else {
+                element.innerHTML = "Type: " + data.docSentiment.type;
+              }
+            });
+          })(url, photoid, useriddiv, userid);
+        }
+
+        console.log(data);
+// var pie = new d3pie("pie", {
+//   data: {
+//     content: data
+//   }
+// });
+if (this.hasNext()) {
+ loadButton.show();
+}
+}
+});
+loadButton.click(function() {
+ feed.next();
+});
+feed.run();
+}
+
+
+function userInfoGet(userid, photoid) {
+  userUrl = 'https://api.instagram.com/v1/users/' + userid + '/?client_id=e59d838604834928b10f01ccfd0110e5';
+  $.getJSON(userUrl, function(user) {
+    element = document.getElementById(photoid);
+    element.innerHTML = "Posted by: " + user.data.username + "<br>" + user.data.counts.followed_by + " followers, " + user.data.counts.follows + " following, " + user.data.counts.media + " posts";
+  });
+}
+
+});
+</script>
 </body>

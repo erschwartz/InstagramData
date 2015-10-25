@@ -1,4 +1,39 @@
 // Instantiate an empty object.
+/*
+                 // Variable allPosts[] contains all of the posts fetched from Instagram based on the searched hashtag (~20 on first query).
+                 // It has ~20 more posts added to it everytime "Load More" is pressed, since more posts are fetched.
+                 // When a different "Sort By" option is chosen, the variable will reset.
+
+                 // You can start from here in implementing the algorithms and D3 visualizations.
+
+                 // These are my (by no means complete) notes on making an algorithm to asses the effectivity of a hashtag
+
+                      // USER
+                      // Followers ++
+                      // Following -
+                      // Number of Posts +/-
+                      //
+                      // POST
+                      // Likes ++
+                      // Comments +/-
+                      //  Depends on Sentiment (speaking of which, here are two links that discuss API's for it)
+                      //    http://blog.mashape.com/list-of-20-sentiment-analysis-apis/
+                      //    https://www.quora.com/Where-can-I-find-an-online-API-for-sentiment-analysis
+                      //
+                      // IF “user_has_liked” === TRUE
+                      //  Likes---
+                      //
+                      //
+                      // Followers - (Following * 0.1) + [Assess their post reach history] = Reputation/Reach of User
+                      //  Post Reach history: Potnetially Look into the performance of their posts in the past, find a way to use that information to better judge the user's significance
+                      //
+                      // Non OP Likes + Positive Sentiments - Negative Sentiments + (Neutral * 0.1 {shows engagement in the post}) = Effect of the post on the company
+                      //
+                      // Rep/Reach of user + Post’s take on company = influence of the hashtag in the specific post (+/-)
+                      //
+                      // Influence of all posts (Pos - Neg) / # of posts = Effectiveness of the hashtag
+
+                  // Don't forget to wake me up!!!*/
 var Instagram = {};
 
 // Small object for holding important configuration data.
