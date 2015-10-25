@@ -1,7 +1,7 @@
-# Instagram Search Web App
+# Insightful
 
-### A stupidly simple web app for searching Instagram's API, by tag.
+### Find out the influence that your brands Instagram hashtag has had!
 
-You can see it working at [grammy.eduvoyage.co.uk](http://grammy.eduvoyage.co.uk)
+#### Authors: Michael Markman and Erika Schwartz 
 
 There is also an accompanying tutorial on my [blog](http://eduvoyage.co.uk/instagram-search-app.html).

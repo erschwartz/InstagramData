@@ -1,140 +1,164 @@
 <head>
+  <title>Insightful</title>
   <!--Import Google Icon Font-->
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+  <style>
+    body > div.container > div > div.input-field.col.s3 {
+      margin-top: 0.5rem;
+    }
+
+    html {
+      font-size: 17px;
+    }
+  </style>
 
 </head>
 <body>
   <div class="container">
-    <nav>
-      <div class="nav-wrapper light-blue">
-        <form>
-          <div class="input-field">
-            <input id="search" type="search" required>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
-          </div>
-        </form>
-      </div>
-    </nav>
-    <br/>
-
-    <!-- <div class="row">
-      <div class="col m3">
-        <div class="card medium">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="https://s-media-cache-ak0.pinimg.com/736x/45/66/f0/4566f08b186c03dd47e8fdc085a0b380.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col m3">
-        <div class="card medium">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="http://imgfave-herokuapp-com.global.ssl.fastly.net/image_cache/1297465826779760.jpeg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col m3">
-        <div class="card medium">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="http://i3.kym-cdn.com/photos/images/original/000/339/125/eb3.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col m3">
-        <div class="card medium">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="https://pbs.twimg.com/profile_images/432610655485825024/Mnh5gFZp.jpeg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="row">
-      <div class="col m6">
-        <div class="card large hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="https://s-media-cache-ak0.pinimg.com/736x/45/66/f0/4566f08b186c03dd47e8fdc085a0b380.jpg">
+      <div class="col s9" style="padding-left: 0px; padding-right: 5px;">
+        <nav>
+          <div class="nav-wrapper light-blue">
+            <form id="search-form">
+              <div class="input-field">
+                <input id="search" type="search" placeholder="Search for a hashtag  " required>
+                <label for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form>
           </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-            <!-- Modal Trigger -->
-            <a class="modal-trigger waves-effect waves-light btn" href="#modal1">More Info</a>
-          </div>
-        </div>
+        </nav>
       </div>
-      <!-- Modal Structure -->
-      <div id="modal1" class="modal modal-fixed-footer">
-        <div class="modal-content">
-          <h4>Modal Header</h4>
-          <p>A bunch of text</p>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-        </div>
+      <div class="input-field col s3">
+        <select id="sort-by">
+          <option disabled selected value="none"><em>Sort By:</em></option>
+          <option value="most-recent">Most Recent</option>
+          <option value="least-recent">Least Recent</option>
+          <option value="most-liked">Most Liked</option>
+          <option value="most-commented">Most Commented</option>
+        </select>
       </div>
-      <div class="col m6">
-        <div class="card large hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="http://imgfave-herokuapp-com.global.ssl.fastly.net/image_cache/1297465826779760.jpeg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
+
+      <br/>
+
+      <div class="row">
+        <div id="instafeed"></div>
       </div>
     </div>
+
+    <a class="waves-effect waves-light btn-large" id="load-more" style="display: table; margin: 0 auto;">Load More</a>
+
+    <br/>
+
   </div>
+
+
 
   <!-- Import JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <script src='javascripts/instafeed.js' type='text/javascript' charset='utf-8'></script>
   <script>
       $(document).ready(function(){
-       // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-       $('.modal-trigger').leanModal();
+         $('select').material_select();
+
+         $('#sort-by').change(function() {
+           $('#instafeed').html('');
+           createFeed();
+         });
+
+         var loadButton = $("#load-more");
+         loadButton.hide();
+         $('#search-form').submit(false);
+
+         $('#search').keypress(function(e) {
+            if(e.which == 13) {
+              $('#instafeed').html('');
+              createFeed();
+            }
+         });
+
+         function createFeed() {
+           var allPosts = [];
+           var feed = new Instafeed({
+               get: 'tagged',
+               tagName: $("#search").val(),
+               clientId: '80e2179188064513abc38425a6732f99',
+               template:
+                   '<div class="col s6">' +
+                     '<div class="card large hoverable">' +
+                       '<div class="card-image waves-effect waves-block waves-light">' +
+                         '<img class="activator" src="{{image}}">' +
+                       '</div>' +
+                       '<div class="card-content">' +
+                         'Username: {{model.user.username}} <br/> Likes: {{model.likes.count}} <br/> Comments: {{model.comments.count}} <br/> Date Posted: {{model.created_time}}' +
+                       '</div>' +
+                       '<div class="card-reveal">' +
+                         '<span class="card-title grey-text text-darken-4"><a href="{{link}}">{{link}}</a><i class="material-icons right">close</i></span>' +
+                         '<p>{{caption}}</p>' +
+                       '</div>' +
+                     '</div>' +
+                   '</div>',
+               resolution: 'standard_resolution',
+               sortBy: $('#sort-by option:selected').val(),
+               filter: function(image) {
+                 image.created_time = moment.unix(image.created_time).format("MM/DD/YYYY");
+                 allPosts.push(image);
+                 console.log(allPosts);
+                 return true;
+               },
+               after: function() {
+                 // disable button if no more results to load
+                 if (this.hasNext()) {
+                   loadButton.show();
+                 }
+
+                 // Variable allPosts[] contains all of the posts fetched from Instagram based on the searched hashtag (~20 on first query).
+                 // It has ~20 more posts added to it everytime "Load More" is pressed, since more posts are fetched.
+                 // When a different "Sort By" option is chosen, the variable will reset.
+
+                 // You can start from here in implementing the algorithms and D3 visualizations.
+
+                 // These are my (by no means complete) notes on making an algorithm to asses the effectivity of a hashtag
+
+                      // USER
+                      // Followers ++
+                      // Following -
+                      // Number of Posts +/-
+                      //
+                      // POST
+                      // Likes ++
+                      // Comments +/-
+                      // 	Depends on Sentiment (speaking of which, here are two links that discuss API's for it)
+                      //    http://blog.mashape.com/list-of-20-sentiment-analysis-apis/
+                      //    https://www.quora.com/Where-can-I-find-an-online-API-for-sentiment-analysis
+                      //
+                      // IF “user_has_liked” === TRUE
+                      // 	Likes---
+                      //
+                      //
+                      // Followers - (Following * 0.1) + [Assess their post reach history] = Reputation/Reach of User
+                      //  Post Reach history: Potnetially Look into the performance of their posts in the past, find a way to use that information to better judge the user's significance
+                      //
+                      // Non OP Likes + Positive Sentiments - Negative Sentiments + (Neutral * 0.1 {shows engagement in the post}) = Effect of the post on the company
+                      //
+                      // Rep/Reach of user + Post’s take on company = influence of the hashtag in the specific post (+/-)
+                      //
+                      // Influence of all posts (Pos - Neg) / # of posts = Effectiveness of the hashtag
+
+                  // Don't forget to wake me up!!!
+
+                 console.log(allPosts);
+               }
+           });
+           loadButton.click(function() {
+             feed.next();
+           });
+           feed.run();
+         }
       });
   </script>
 </body>

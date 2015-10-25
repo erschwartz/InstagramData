@@ -19,7 +19,7 @@ Instagram.Config = {
     photoTemplate = _.template($('#photo-template').html());
   }
 
-  
+
 
   function userReturn(id) {
     var theUser;
@@ -86,7 +86,7 @@ Instagram.Config = {
     if(typeof tag === 'undefined'){
       throw new Error("Resource requires a tag. Try searching for Capital One.");
     } else {
-      // Make sure tag is a string, trim any trailing/leading whitespace and take only the first 
+      // Make sure tag is a string, trim any trailing/leading whitespace and take only the first
       // word, if there are multiple.
       tag = String(tag).trim().split(" ")[0];
     }
@@ -101,7 +101,7 @@ Instagram.Config = {
     };
   }
 
-  function paginate(max_id){    
+  function paginate(max_id){
     $.getJSON(generateUrl(tag), toScreen);
   }
 
@@ -155,7 +155,6 @@ Instagram.Config = {
 
 $(function(){
   Instagram.App.init();
-  
-  Instagram.App.search('CapitalOne');  
-});
 
+  Instagram.App.search('CapitalOne');
+});
