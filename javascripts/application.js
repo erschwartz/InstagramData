@@ -1,6 +1,7 @@
 // Instantiate an empty object.
 var Instagram = {};
-
+var users_array = [];
+var index = 0;
 // Small object for holding important configuration data.
 Instagram.Config = {
   clientID: '80e2179188064513abc38425a6732f99',
@@ -21,45 +22,43 @@ Instagram.Config = {
 
   
 
-  function userReturn(id) {
-    var theUser;
-    var thePhoto;
-    var config = Instagram.Config;
-    userUrl = config.apiHost + "/v1/users/" + id + "/?client_id=80e2179188064513abc38425a6732f99";
-    $.getJSON(userUrl, function(user) {
-      user = {
-          username: user.data.username,
-          full_name: user.data.full_name,
-          profile_picture: user.data.profile_picture,
-          counts: {
-            media: user.data.counts.media,
-            follows: user.data.counts.follows,
-            followed_by: user.data.counts.followed_by,
-            id: user.data.id
-          }
-        };
-      theUser = user;
-      console.log(theUser);
-      return theUser;
-    });
-  }
+  // function userReturn(id) {
+  //   var config = Instagram.Config;
+  //     var theUser;
+  //     userUrl = config.apiHost + "/v1/users/" + id + "/?client_id=80e2179188064513abc38425a6732f99";
+  //     $.getJSON(userUrl, function(user) {
+  //     user = {
+  //         username: user.data.username,
+  //         full_name: user.data.full_name,
+  //         profile_picture: user.data.profile_picture,
+  //         counts: {
+  //           media: user.data.counts.media,
+  //           follows: user.data.counts.follows,
+  //           followed_by: user.data.counts.followed_by,
+  //           id: user.data.id
+  //         }
+  //       };
 
-  function photoReturn(photo, userRet) {
+  //     users_array.push(user);
+  //   });
+  // }
+
+  function photoReturn(photo) {
       newPhoto = {
       count: photo.likes.count,
       avatar: photo.user.profile_picture,
       photo: photo.images.low_resolution.url,
       url: photo.link,
       likesCount: photo.likes.count,
-      user: userRet,
+      user: users_array[index],
       caption: photo.caption.text
     };
+    index++;
     return newPhoto;
   }
 
   function toTemplate(photo){
-    var userRet = userReturn(photo.user.id);
-    var newPhoto = photoReturn(photo, userRet);
+    var newPhoto = photoReturn(photo);
     console.log(newPhoto);
     return photoTemplate(newPhoto);
   }
@@ -67,13 +66,22 @@ Instagram.Config = {
 
   function toScreen(photos){
     var photos_html = '';
+    var photos_id = [];
+
 
     $('.paginate a').attr('data-max-tag-id', photos.pagination.next_max_id)
                     .fadeIn();
 
     $.each(photos.data, function(index, photo){
+      photos_id.push(photo.user.id);
+    });
+    for (var i = 0; i < users_array.length; i++) {
+        userReturn(photos_id[i]);
+      }
+    $.each(photos.data, function(index, photo){
       photos_html += toTemplate(photo);
     });
+
 
     $('div#photos-wrap').append(photos_html);
   }
