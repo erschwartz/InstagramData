@@ -45,7 +45,7 @@
 
       <br/>
 
-      <center><div id="pieChart"></div></center>
+      <center><div id="pieChart" hidden="true"></div></center>
       <script>
         var pie = new d3pie("pieChart", {
           "header": {
@@ -131,7 +131,7 @@
             }
           }
         });
-</script>
+      </script>
 
 
 <div class="row">
@@ -196,7 +196,7 @@
      '<span class="card-title grey-text text-darken-4"><a href="{{link}}">{{link}}</a><i class="material-icons right">close</i></span>' +
      '<p>{{caption}}</p>' +
      '<p id ="sentiment{{id}}"></p>' +
-     '<p id ="user{{id}}"></p>' + 
+     '<p id ="user{{id}}"></p>' +
      '</div>' +
      '</div>' +
      '</div>',
